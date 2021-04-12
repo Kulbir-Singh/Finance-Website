@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
 const Header = () => {
@@ -19,16 +19,20 @@ const Header = () => {
   };
   return (
     <Wrapper>
+      <Logo>
+        <Link to="/">Finance</Link>
+      </Logo>
       <button onClick={handleCLick}>Log Out</button>
     </Wrapper>
   );
 };
-
+const Logo = styled.button``;
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   grid-area: header;
-  border: 2px solid blue;
+  background-color: #162252;
+  z-index: 2;
 `;
 
 export default Header;

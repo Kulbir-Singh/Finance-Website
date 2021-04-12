@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Page from "./components/Page";
-import News from "./components/News";
 import GlobalStyles from "./components/GlobalStyles";
 import { AuthProvider } from "./components/context/AuthContext";
 
@@ -17,9 +16,9 @@ function App() {
         <Router>
           <Wrapper>
             <Header />
-            <Sidebar />
+            {/* <Sidebar /> */}
             <Page />
-            <News />
+            {/* <News /> */}
             <Footer />
           </Wrapper>
         </Router>
@@ -35,11 +34,12 @@ const Wrapper = styled.div`
   display: grid;
   padding: none;
   margin: none;
+  background-color: #f0fcfc;
   grid-template-rows: 10% 85% 5%;
   grid-template-columns: 10% 75% 15%;
   grid-template-areas:
     "header header header"
-    "sidebar page news"
+    "page page page"
     "footer footer footer";
 `;
 

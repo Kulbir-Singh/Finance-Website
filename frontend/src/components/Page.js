@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { NavLink, Switch, useHistory } from "react-router-dom";
+import { NavLink, Switch, useHistory, useParams } from "react-router-dom";
 import Signup from "./signup";
 import Login from "./Login";
 import { BrowserRouter as Router, Route } from "react-router-dom";
@@ -8,35 +8,48 @@ import PrivateRoute from "./PrivateRoute";
 import News from "./Pages/News";
 import Profile from "./Pages/Profile";
 import Navbar from "./Navbar";
+import Homepage from "./Pages/Homepage";
+import Stocks from "./Pages/Stocks";
 
 const Page = () => {
+  const path = window.location.href;
+  useEffect(() => {
+    console.log(path);
+  }, []);
   return (
     <Wrapper>
-      <Router>
-        {" "}
-        <Navbar />
-        <Switch>
-          <PrivateRoute exact path="/profile" component={Profile} />
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/news">
-            <News />
-          </Route>
-        </Switch>
-      </Router>
+      <Navbar />
+      <Switch>
+        <PrivateRoute exact path="/profile" component={Profile} />
+        <Route path="/signup">
+          <Signup />
+        </Route>{" "}
+        <Route exact path="/">
+          <Homepage />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route exact path="/stocks">
+          <Stocks />
+        </Route>
+        <Route exact path="/news">
+          <News />
+        </Route>
+      </Switch>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 80%;
+  margin-left: 10%;
   height: 100%;
+  border-radius: 5px;
   grid-area: page;
-  border: 2px solid orange;
+  box-shadow: 0 0px 0px 0px white, 0 0px 0px 0px white,
+    12px 0 15px -4px rgba(31, 73, 125, 0.8),
+    -12px 0 15px -4px rgba(31, 73, 125, 0.8);
 `;
 
 export default Page;

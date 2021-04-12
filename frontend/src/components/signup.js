@@ -22,12 +22,35 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      await signup(emailRef.current.value, passwordRef.current.value);
-      history.push("./");
+      const info = await signup(
+        emailRef.current.value,
+        passwordRef.current.value
+      );
+      let userInfo = {
+        email: info.user.email,
+        uid: info.user.uid,
+        username: info.user.displayName ? info.user.displayName : info.user.uid,
+        photo: info.user.photoUrl
+          ? info.user.photoUrl
+          : "https://s3.amazonaws.com/appforest_uf/f1512936020165x278911292087286720/A.png",
+      };
+      fetch("/getallusers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setLoading(false);
+          history.push("./");
+        });
+      console.log(info);
     } catch {
       setError("account not created");
     }
-    setLoading(false);
   };
 
   return (
