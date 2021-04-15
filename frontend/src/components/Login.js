@@ -1,30 +1,58 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "./context/AuthContext";
 import { Link, Redirect, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+  receiveUserInfo,
+  receiveUserInfoError,
+  requestUserInfo,
+} from "../Actions";
 
 export default function Login() {
   //using useRef to get the values from the inputs
   const emailRef = useRef();
   const passwordRef = useRef();
+  const dispatch = useDispatch();
   const { login, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
-  console.log(currentUser);
+  const [submitted, setSubmitted] = useState(false);
   //this is the onsubmit function that will handle the password and email verification
   //it will return an error if the password dont match of if the account hasnt been created
-  const handleSubmit = async (e) => {
-    console.log(currentUser);
-    e.preventDefault();
-    try {
-      setError("");
-      setLoading(true);
-      await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
-    } catch {
-      setError("failed to sign in");
+  useEffect(async () => {
+    const ac = new AbortController();
+    if (submitted) {
+      try {
+        setError("");
+        setLoading(true);
+        const info = await login(
+          emailRef.current.value,
+          passwordRef.current.value
+        );
+        let userInfo = {
+          email: info.user.email,
+          uid: info.user.uid,
+          username: info.user.displayName
+            ? info.user.displayName
+            : info.user.uid,
+          photo: info.user.photoUrl
+            ? info.user.photoUrl
+            : "https://s3.amazonaws.com/appforest_uf/f1512936020165x278911292087286720/A.png",
+        };
+        dispatch(receiveUserInfo(userInfo));
+        localStorage.setItem("uid", JSON.stringify(userInfo));
+        history.push("/");
+      } catch {
+        setError("failed to sign in");
+      }
     }
     setLoading(false);
+    return () => ac.abort();
+  }, [submitted]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitted(true);
   };
   if (!currentUser) {
     return (

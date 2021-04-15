@@ -2,7 +2,11 @@
 
 const express = require("express");
 const morgan = require("morgan");
-const { addUserInfo } = require("./handlers");
+const {
+  addUserInfo,
+  addToBookmarked,
+  getAllBookmarked,
+} = require("./handlers");
 const PORT = process.env.PORT || 4000;
 
 express()
@@ -12,6 +16,8 @@ express()
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
   .post("/getallusers", addUserInfo)
+  .post("/addpost", addToBookmarked)
+  .get("/bookmarked", getAllBookmarked)
   // .get("*", (req, res) => {
   //   res.status(404).json({
   //     status: 404,

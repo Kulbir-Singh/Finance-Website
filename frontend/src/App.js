@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -7,8 +8,15 @@ import Sidebar from "./components/Sidebar";
 import Page from "./components/Page";
 import GlobalStyles from "./components/GlobalStyles";
 import { AuthProvider } from "./components/context/AuthContext";
-
+import { receiveUserInfo } from "./Actions";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const ac = new AbortController();
+    let userInfo = JSON.parse(localStorage.getItem("uid"));
+    dispatch(receiveUserInfo(userInfo));
+    return () => ac.abort();
+  }, []);
   return (
     <>
       <AuthProvider>
@@ -16,9 +24,7 @@ function App() {
         <Router>
           <Wrapper>
             <Header />
-            {/* <Sidebar /> */}
             <Page />
-            {/* <News /> */}
             <Footer />
           </Wrapper>
         </Router>
