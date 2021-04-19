@@ -17,6 +17,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  let tempInfo;
   const [submitted, setSubmitted] = useState(false);
   //this is the onsubmit function that will handle the password and email verification
   //it will return an error if the password dont match of if the account hasnt been created
@@ -33,21 +34,33 @@ export default function Login() {
         let userInfo = {
           email: info.user.email,
           uid: info.user.uid,
-          username: info.user.displayName
-            ? info.user.displayName
-            : info.user.uid,
+          // username: info.user.displayName
+          //   ? info.user.displayName
+          //   : info.user.uid,
           photo: info.user.photoUrl
             ? info.user.photoUrl
             : "https://s3.amazonaws.com/appforest_uf/f1512936020165x278911292087286720/A.png",
         };
-        dispatch(receiveUserInfo(userInfo));
+        console.log(userInfo);
+        userInfo = await fetch("/getuser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userInfo),
+        })
+          .then((res) => res.json())
+          .then((data) => data);
+        console.log(userInfo);
+        dispatch(receiveUserInfo(userInfo.data));
         localStorage.setItem("uid", JSON.stringify(userInfo));
+        setLoading(false);
         history.push("/");
       } catch {
         setError("failed to sign in");
       }
     }
-    setLoading(false);
+
     return () => ac.abort();
   }, [submitted]);
   const handleSubmit = async (e) => {

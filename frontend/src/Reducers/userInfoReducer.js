@@ -15,6 +15,7 @@ export default function userInfoReducer(state = initialState, action) {
     }
     case "RECEIVE_USERINFO_INFO": {
       return {
+        ...state,
         status: "idle",
         USERINFO: action.userInfo,
       };
@@ -30,6 +31,7 @@ export default function userInfoReducer(state = initialState, action) {
     }
     case "RECEIVE_BOOKMARKS": {
       return {
+        ...state,
         status: "idle",
         BOOKMARKS: action.bookmarks,
       };

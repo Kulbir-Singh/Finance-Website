@@ -6,6 +6,10 @@ const {
   addUserInfo,
   addToBookmarked,
   getAllBookmarked,
+  getUserInfo,
+  getAllUsers,
+  getFriends,
+  addToSharedPosts,
 } = require("./handlers");
 const PORT = process.env.PORT || 4000;
 
@@ -15,9 +19,13 @@ express()
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use("/", express.static(__dirname + "/"))
-  .post("/getallusers", addUserInfo)
-  .post("/addpost", addToBookmarked)
+  .post("/adduser", addUserInfo)
+  .post("/addbookmark", addToBookmarked)
+  .get("/allusers", getAllUsers)
   .get("/bookmarked", getAllBookmarked)
+  .post("/getuser", getUserInfo)
+  .post("/friendslist", getFriends)
+  .post("/addToSharing", addToSharedPosts)
   // .get("*", (req, res) => {
   //   res.status(404).json({
   //     status: 404,

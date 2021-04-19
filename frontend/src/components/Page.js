@@ -11,7 +11,9 @@ import Profile from "./Pages/Profile";
 import Navbar from "./Navbar";
 import Homepage from "./Pages/Homepage";
 import Stocks from "./Pages/Stocks";
+import Stock from "./Pages/Stock";
 import Bookmarked from "./Pages/Bookmarked";
+import Search from "./Pages/Search";
 
 const Page = () => {
   return (
@@ -31,8 +33,17 @@ const Page = () => {
         <Route exact path="/stocks">
           <Stocks />
         </Route>
+        <Route exact path="/stocks/:stockId/:stockName">
+          <Stock />
+        </Route>
         <Route exact path="/news">
           <News />
+        </Route>
+        <Route exact path="/profile">
+          <Profile />
+        </Route>
+        <Route exact path="/search/:keyword">
+          <Search />
         </Route>
         <Route exact path="/bookmarks">
           <Bookmarked />

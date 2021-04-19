@@ -6,12 +6,7 @@ import { Link } from "react-router-dom";
 export default function Navbar() {
   const [menu, setMenu] = useState(false);
   const { currentUser } = useAuth();
-  useEffect(() => {}, [menu]);
 
-  onmousedown = () => {
-    if (menu && document.getElementById("navbar")) {
-    }
-  };
   return (
     <>
       <Menu
@@ -23,7 +18,7 @@ export default function Navbar() {
       </Menu>
       <Wrapper menu={menu} id="navbar">
         {menu && (
-          <div>
+          <NavbarLinks>
             <Link
               to="/news"
               onClick={() => {
@@ -50,8 +45,17 @@ export default function Navbar() {
                 ᐅ Bookmarked
               </Link>
             )}
-            {currentUser && <p>ᐅ Profile</p>}
-          </div>
+            {currentUser && (
+              <Link
+                to="/profile"
+                onClick={() => {
+                  setMenu(!menu);
+                }}
+              >
+                ᐅ Profile
+              </Link>
+            )}
+          </NavbarLinks>
         )}
       </Wrapper>
     </>
@@ -64,16 +68,25 @@ const Menu = styled.button`
   left: 0;
 `;
 
+const NavbarLinks = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+
 const Wrapper = styled.div`
   width: 400px;
-  /* width: ${(props) => (props.menu ? "400px" : "0")}; */
   transform: ${(props) =>
     props.menu ? "translateX(0)" : "translateX(-400px)"};
   transition-duration: 1s;
-  height: 85%;
+  height: 90%;
   background-color: white;
   padding-top: 50px;
   padding-left: 2%;
   position: absolute;
   left: 0;
+  box-shadow: ${(props) =>
+    props.menu
+      ? "0 0px 0px 0px white, 0 0px 0px 0px white,12px 0 15px -4px rgba(31, 73, 125, 0.8),-12px 0 15px -4px rgba(31, 73, 125, 0.8)"
+      : ""};
 `;

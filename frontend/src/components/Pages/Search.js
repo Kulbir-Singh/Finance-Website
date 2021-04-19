@@ -1,39 +1,39 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useAuth } from "../context/AuthContext";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 import { receiveUserInfo, requestUserInfo } from "../../Actions";
-import SharedPost from "./SharedPost";
+
 export default function News() {
-  const [modal, setModal] = useState(false);
-  const [modalContent, setModalContent] = useState();
+  const [savedArticle, setSavedArticle] = useState();
+  let { keyword } = useParams();
   const [articles, setArticles] = useState();
   const { currentUser } = useAuth();
   const user = useSelector((state) => state.userInfo);
   const [urlInfo, setUrlInfo] = useState({
     catgory: "business",
   });
+  console.log(articles);
   useEffect(() => {
-    console.log(user);
-    const ac = new AbortController();
     fetch(
-      `https://newsapi.org/v2/top-headlines?category=${urlInfo.catgory}&page=2&language=en&apiKey=38801c44ca8e410290a82a2529881168`
+      `https://newsapi.org/v2/everything?q=${keyword}&language=en&apiKey=38801c44ca8e410290a82a2529881168`
     )
       .then((res) => res.json())
       .then((data) => setArticles(data.articles));
-    return () => ac.abort();
-  }, [urlInfo]);
+  }, []);
   const SaveArticle = async (article) => {
     try {
       if (user.USERINFO) {
         console.log(user.USERINFO);
         const newSavedArt = {
-          uid: user.USERINFO.uid,
+          uid: user.USERINFO.data.uid,
           title: article.title,
           url: article.url,
           image: article.urlToImage,
         };
-        fetch("/addbookmark", {
+        setSavedArticle(newSavedArt);
+        fetch("/addpost", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -49,25 +49,11 @@ export default function News() {
       console.log(err);
     }
   };
-  const ShareArticle = async (article) => {
-    console.log(article);
-    if (user.USERINFO && article) {
-      const ArticleInfo = {
-        from: user.USERINFO.uid,
-        user: user.USERINFO,
-        to: "",
-        isread: false,
-        url: article.url,
-        photo: article.urlToImage,
-        content: article.title,
-        message: "",
-      };
-      setModal(true);
-      setModalContent(ArticleInfo);
-      console.log(ArticleInfo);
-    }
+  const ShareArticle = async (e) => {
+    e.preventDefault();
+    console.log("shared");
   };
-
+  console.log("rendered");
   return articles ? (
     <Wrapper>
       <Category>
@@ -107,12 +93,6 @@ export default function News() {
           Technology
         </Button>
       </Category>
-      <SharedPost
-        setModal={setModal}
-        modal={modal}
-        modalContent={modalContent}
-        setModalContent={setModalContent}
-      />
       {articles.map((article) => {
         return (
           <>
@@ -122,13 +102,6 @@ export default function News() {
               <Content>{article.content}</Content>
               <Description>{article.description}</Description>
               <PublishedAt>{article.publishedAt}</PublishedAt>
-              {/* <a
-                onClick={() => {
-                  window.open(`${article.url}`);
-                }}
-              >
-                {article.url}
-              </a> */}
               <Actions>
                 {/* get all the bookmarked for this user and then use the .find method to see if the current 
                 article is bookmarked if it is then you do a  {bookmarked? saved}{!bookmarked?} */}
@@ -141,9 +114,7 @@ export default function News() {
                     save
                   </Saved>
                 )}
-                {currentUser && (
-                  <Shared onClick={() => ShareArticle(article)}>share</Shared>
-                )}
+                {currentUser && <Shared onClick={ShareArticle}>share</Shared>}
               </Actions>
             </Article>{" "}
           </>
@@ -187,9 +158,7 @@ const Img = styled.img`
   height: 200px;
 `;
 
-const Article = styled.div`
-  margin: 50px 0;
-`;
+const Article = styled.div``;
 
 const Description = styled.div``;
 

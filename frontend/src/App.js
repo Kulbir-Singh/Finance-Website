@@ -9,14 +9,19 @@ import Page from "./components/Page";
 import GlobalStyles from "./components/GlobalStyles";
 import { AuthProvider } from "./components/context/AuthContext";
 import { receiveUserInfo } from "./Actions";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     const ac = new AbortController();
     let userInfo = JSON.parse(localStorage.getItem("uid"));
-    dispatch(receiveUserInfo(userInfo));
+    console.log(userInfo);
+    if (userInfo) {
+      dispatch(receiveUserInfo(userInfo.data));
+    }
     return () => ac.abort();
   }, []);
+
   return (
     <>
       <AuthProvider>
@@ -25,7 +30,7 @@ function App() {
           <Wrapper>
             <Header />
             <Page />
-            <Footer />
+            {/* <Footer /> */}
           </Wrapper>
         </Router>
       </AuthProvider>
@@ -41,12 +46,12 @@ const Wrapper = styled.div`
   padding: none;
   margin: none;
   background-color: #f0fcfc;
-  grid-template-rows: 10% 85% 5%;
+  grid-template-rows: 10% 90% 0%;
   grid-template-columns: 10% 75% 15%;
   grid-template-areas:
     "header header header"
     "page page page"
-    "footer footer footer";
+    /* "footer footer footer"; */;
 `;
 
 export default App;
