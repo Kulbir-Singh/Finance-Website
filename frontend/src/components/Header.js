@@ -4,6 +4,7 @@ import { Link, NavLink, useHistory } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { receiveUserInfo } from "../Actions";
 import { useDispatch, useSelector } from "react-redux";
+import subVault from "../Resources/vaultLogo.png";
 
 const Header = () => {
   const user = useSelector((state) => state.userInfo);
@@ -12,7 +13,6 @@ const Header = () => {
   const { currentUser, logout } = useAuth();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [nofication, setNotification] = useState(false);
   const [value, setValue] = useState("");
   const handleKeyDown = () => {};
   const handleCLick = async () => {
@@ -29,21 +29,25 @@ const Header = () => {
   console.log(user);
   return (
     <Wrapper>
-      <Logo>
-        <Link to="/">Homepage</Link>
-      </Logo>
-      <img src={receiveUserInfo} />
-      <div>
+      <Logo onClick={() => history.push("/")}>Vault </Logo>
+      {/* <SubLogo src={subVault} /> */}
+      <HeaderOptions>
+        <Link to="/news">News</Link>
+        <Link to="/stocks">Stocks</Link>
+        <img src={receiveUserInfo} />
+      </HeaderOptions>
+      <SearchBar>
         <Input
           type="text"
           value={value}
           onChange={(ev) => setValue(ev.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <Button>
-          <Link to={`search/${value}`}>Search</Link>
+        <Button onClick={() => history.push(`/search/${value}`)}>
+          Search
+          {/* <Link to={`/search/${value}`}></Link> */}
         </Button>
-      </div>{" "}
+      </SearchBar>{" "}
       {user && (
         <UserInfo>
           {" "}
@@ -51,55 +55,139 @@ const Header = () => {
           {user.USERINFO && (
             <UserName>Welcome, {user.USERINFO.username}</UserName>
           )}
-          <button onClick={handleCLick}>
+          <LoginBtn onClick={handleCLick}>
             {currentUser ? "Logout" : "Login"}
-          </button>
+          </LoginBtn>
         </UserInfo>
       )}{" "}
-      {user.USERINFO && (
-        <Notification onClick={() => setNotification(!nofication)}>
-          🕭
-        </Notification>
-      )}
     </Wrapper>
   );
 };
 
-const Button = styled.button``;
+const HeaderOptions = styled.div`
+  display: flex;
+  width: 65%;
+  > * {
+    padding-right: 100px;
+  }
+`;
+
+const LoginBtn = styled.button`
+  height: 30px;
+  border-radius: 20px;
+  outline: none;
+  background-color: #010718;
+  color: white;
+  margin-right: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 3px solid white;
+  transition-duration: 0.75s;
+  :hover {
+    color: black;
+    border: 3px solid black;
+    background-color: white;
+  }
+`;
+const SubLogo = styled.img`
+  width: 60px;
+  height: 50px;
+`;
+
+const Button = styled.button`
+  background-color: #010718;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid white;
+  cursor: pointer;
+  outline: none;
+  margin-left: -3px;
+  font-size: 15px;
+  color: white;
+  border-radius: 20px;
+  transition-duration: 0.75s;
+  :hover {
+    color: black;
+    border: 3px solid black;
+    background-color: white;
+  }
+`;
+
+const SearchBar = styled.div`
+  /* position: absolute; */
+  display: flex;
+  right: 425px;
+  margin-right: 20px;
+  background-color: white;
+  border-radius: 20px;
+  border: 2px solid white;
+`;
 
 const Input = styled.input`
   width: 250px;
+  height: 30px;
+  outline: none;
+  text-decoration: none;
+  border: none;
+  border-bottom-left-radius: 20px;
+  border-top-left-radius: 20px;
 `;
 
-const Logo = styled.button``;
-
-const Notification = styled.button`
+const Logo = styled.button`
+  left: 25px;
+  font-size: 30px;
   position: absolute;
-  left: 97%;
-  top: 3%;
-  background-color: white;
-  font-size: 25px;
+  margin-right: 40px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  font-family: "Alfa Slab One";
+  text-decoration: none;
+  background-color: transparent;
+  transition-duration: 0.5s;
+
+  :hover {
+    border: 5px solid white;
+    border-radius: 5px;
+  }
 `;
 
 const UserImg = styled.img`
   width: 50px;
+  background-color: white;
+  border: 3px solid white;
+  border-radius: 25px;
+  margin: 10px;
   height: 50px;
 `;
+
 const UserInfo = styled.div`
   display: flex;
+  align-items: center;
+  /* position: absolute; */
+  right: 125px;
 `;
 const UserName = styled.div`
   color: white;
-  font-size: 25px;
+  font-size: 15px;
+  padding-right: 20px;
 `;
 const Wrapper = styled.div`
-  width: 100%;
   display: flex;
+  position: fixed;
+  width: 100%;
   align-items: center;
-  justify-content: space-around;
-  height: 100%;
+  height: 65px;
+  padding-left: 200px;
   grid-area: header;
-  background-color: #162252;
+  background: rgb(4, 28, 97);
+  background: linear-gradient(
+    0deg,
+    rgba(1, 19, 69, 1) 0%,
+    rgba(14, 18, 32, 1) 100%
+  );
   z-index: 2;
 `;
 

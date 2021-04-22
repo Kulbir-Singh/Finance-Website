@@ -16,15 +16,25 @@ export default function Stock() {
         .then((data) => setStockNews(data));
     }
   }, [stock]);
+  console.log(stockNews);
+
   return (
     <Wrapper>
       stock
-      <ChartInfo stockId={stockId} stock={stock} setStock={setStock} />
+      <StockChart>
+        <ChartInfo
+          stockWidth={100}
+          stockHeight={100}
+          stockId={stockId}
+          stock={stock}
+          setStock={setStock}
+        />
+      </StockChart>
       <NewsSection>
         {stockNews?.articles?.map((article) => {
           return (
             <Article>
-              <a href={article.url}>{article.title}</a>
+              <News href={article.url}>{article.title}</News>
             </Article>
           );
         })}
@@ -32,6 +42,16 @@ export default function Stock() {
     </Wrapper>
   );
 }
+
+const News = styled.a`
+  color: black;
+`;
+
+const StockChart = styled.div`
+  height: 700px;
+  width: 60%;
+`;
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;

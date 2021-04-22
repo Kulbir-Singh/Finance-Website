@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Bar, Line } from "react-chartjs-2";
 import styled from "styled-components";
 
-export default function ChartInfo({ stockId, stock, setStock }) {
+export default function ChartInfo({
+  stockWidth,
+  stockHeight,
+  stockId,
+  stock,
+  setStock,
+}) {
   const [intervals, setIntervals] = useState([]);
   const [stockPrice, setStockPrice] = useState([]);
 
@@ -21,7 +27,7 @@ export default function ChartInfo({ stockId, stock, setStock }) {
       .then((res) => res.json())
       .then((data) => setStock(data));
   }, []);
-
+  console.log("thisis theh stock width", stockWidth);
   useEffect(() => {
     if (stock) {
       let arr = stock?.values?.map((item) => {
@@ -40,7 +46,7 @@ export default function ChartInfo({ stockId, stock, setStock }) {
   if (stock && intervals && stockPrice) {
     return (
       <Wrapper>
-        <ChartDraw>
+        <ChartDraw stockWidth={stockWidth} stockHeight={stockHeight}>
           <Line
             data={{
               labels: intervals,
@@ -78,7 +84,7 @@ const Article = styled.div`
 const NewsSection = styled.div``;
 
 const ChartDraw = styled.div`
-  width: 90%;
-  height: 450px;
+  width: ${(props) => props.stockWidth + "%"};
+  height: ${(props) => props.stockHeight + "%"};
   border: 2px solid lightgrey;
 `;

@@ -30,7 +30,7 @@ function App() {
           <Wrapper>
             <Header />
             <Page />
-            {/* <Footer /> */}
+            <Footer />
           </Wrapper>
         </Router>
       </AuthProvider>
@@ -41,17 +41,17 @@ function App() {
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   display: grid;
   padding: none;
   margin: none;
-  background-color: #f0fcfc;
-  grid-template-rows: 10% 90% 0%;
+  background-color: white;
+  grid-template-rows: 75px 100% 50px;
   grid-template-columns: 10% 75% 15%;
   grid-template-areas:
     "header header header"
     "page page page"
-    /* "footer footer footer"; */;
+    "footer footer footer";
 `;
 
 export default App;

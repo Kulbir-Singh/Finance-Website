@@ -4,10 +4,13 @@ import { useAuth } from "../context/AuthContext";
 import { useSelector } from "react-redux";
 import { receiveUserInfo, requestUserInfo } from "../../Actions";
 import SharedPost from "./SharedPost";
+import Notification from "../Pages/Notifcation";
+
 export default function News() {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState();
   const [articles, setArticles] = useState();
+  const [notifcationModal, setNotificationModal] = useState();
   const { currentUser } = useAuth();
   const user = useSelector((state) => state.userInfo);
   const [urlInfo, setUrlInfo] = useState({
@@ -49,6 +52,21 @@ export default function News() {
       console.log(err);
     }
   };
+  console.log(articles);
+  onscroll = () => {
+    switch (window.scrollY) {
+      case 500:
+        console.log("busines");
+        break;
+      case 600:
+        console.log("technology");
+        break;
+      default:
+        console.log("hello");
+    }
+    console.log(window.scrollY);
+  };
+
   const ShareArticle = async (article) => {
     console.log(article);
     if (user.USERINFO && article) {
@@ -64,49 +82,21 @@ export default function News() {
       };
       setModal(true);
       setModalContent(ArticleInfo);
-      console.log(ArticleInfo);
     }
   };
 
+  var lastScrollTop = 0;
+  window.addEventListener("scroll", function (event) {
+    if (window.scrollY > lastScrollTop) {
+      console.log("down");
+    } else {
+      console.log("up");
+    }
+    lastScrollTop = window.scrollY;
+  });
+
   return articles ? (
     <Wrapper>
-      <Category>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "general" });
-          }}
-        >
-          General
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "business" });
-          }}
-        >
-          Business
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "entertainment" });
-          }}
-        >
-          Entertainment
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "science" });
-          }}
-        >
-          Science
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "technology" });
-          }}
-        >
-          Technology
-        </Button>
-      </Category>
       <SharedPost
         setModal={setModal}
         modal={modal}
@@ -117,34 +107,32 @@ export default function News() {
         return (
           <>
             <Article>
-              <Title>{article.title}</Title>
               <Img src={article.urlToImage} />
-              <Content>{article.content}</Content>
-              <Description>{article.description}</Description>
-              <PublishedAt>{article.publishedAt}</PublishedAt>
-              {/* <a
-                onClick={() => {
-                  window.open(`${article.url}`);
-                }}
-              >
-                {article.url}
-              </a> */}
-              <Actions>
-                {/* get all the bookmarked for this user and then use the .find method to see if the current 
+              <Info>
+                <Title>
+                  {article.title}
+                  <a href={article.url} /> ➤{" "}
+                </Title>{" "}
+                <Description>{article.description}</Description>
+                <Actions>
+                  {/* get all the bookmarked for this user and then use the .find method to see if the current 
                 article is bookmarked if it is then you do a  {bookmarked? saved}{!bookmarked?} */}
-                {currentUser && (
-                  <Saved
-                    onClick={() => {
-                      SaveArticle(article);
-                    }}
-                  >
-                    save
-                  </Saved>
-                )}
-                {currentUser && (
-                  <Shared onClick={() => ShareArticle(article)}>share</Shared>
-                )}
-              </Actions>
+                  {currentUser && (
+                    <Saved
+                      onClick={() => {
+                        SaveArticle(article);
+                      }}
+                    >
+                      save
+                    </Saved>
+                  )}
+                  {currentUser && (
+                    <Shared onClick={() => ShareArticle(article)}>share</Shared>
+                  )}
+                </Actions>
+                {/* <Content>{article.content}</Content> */}
+              </Info>
+              {/* <PublishedAt>{article.publishedAt}</PublishedAt> */}
             </Article>{" "}
           </>
         );
@@ -155,9 +143,21 @@ export default function News() {
   );
 }
 
-const Actions = styled.div``;
+const Actions = styled.div`
+  display: flex;
+`;
 const Shared = styled.button``;
-const Saved = styled.button``;
+const Saved = styled.button`
+  margin-right: 20px;
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 15px;
+  justify-content: space-around;
+`;
 
 const Category = styled.div`
   display: flex;
@@ -176,19 +176,44 @@ const Button = styled.button`
   border-bottom-left-radius: 10px;
 `;
 const Wrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 30px;
   height: 100%;
-  overflow: auto;
-  flex-direction: column;
 `;
 
 const Img = styled.img`
-  width: 400px;
-  height: 200px;
+  width: 250px;
+  height: 100%;
+  padding: 15px;
+  border-radius: 30px;
+  transition-duration: 2s;
+  :hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Article = styled.div`
+  display: flex;
   margin: 50px 0;
+  width: 100%;
+  height: 250px;
+  border-radius: 20px;
+
+  /* -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
+    -8px 3px 50px -5px rgba(0, 0, 0, 0.36);
+  box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
+    -8px 3px 50px -5px rgba(0, 0, 0, 0.36); */
+  /* border: 2px solid #5c80ff; */
+  background-image: linear-gradient(
+    to left top,
+    #d1e3ff,
+    #e0e9ff,
+    #edf0ff,
+    #f7f7ff,
+    #ffffff
+  );
+  overflow: hidden;
 `;
 
 const Description = styled.div``;
@@ -204,4 +229,12 @@ const Content = styled.div`
 
 const Author = styled.p``;
 
-const Title = styled.p``;
+const Title = styled.a`
+  font-size: 20px;
+  color: black;
+  font-weight: bold;
+  :hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;

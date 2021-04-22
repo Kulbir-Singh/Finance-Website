@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   grid-area: footer;
   width: 100%;
   height: 100%;
-  background-color: #162252;
+  background-color: #010718;
 `;
 
 export default Footer;

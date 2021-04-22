@@ -51,6 +51,12 @@ export default createGlobalStyle`
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
+  a{
+    color:white;
+    text-decoration:none;
+    outline:none;
+    font-size:15px;
+  }
   ol, ul {
     list-style: none;
   }

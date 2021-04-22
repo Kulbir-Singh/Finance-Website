@@ -1,98 +1,82 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useAuth } from "../context/AuthContext";
 import { useParams } from "react-router";
+import { useAuth } from "../context/AuthContext";
 import { useSelector } from "react-redux";
 import { receiveUserInfo, requestUserInfo } from "../../Actions";
+import SharedPost from "./SharedPost";
+import Notification from "../Pages/Notifcation";
 
 export default function News() {
-  const [savedArticle, setSavedArticle] = useState();
   let { keyword } = useParams();
+  const [modal, setModal] = useState(false);
+  const [modalContent, setModalContent] = useState();
   const [articles, setArticles] = useState();
+  const [notifcationModal, setNotificationModal] = useState();
   const { currentUser } = useAuth();
   const user = useSelector((state) => state.userInfo);
   const [urlInfo, setUrlInfo] = useState({
     catgory: "business",
   });
-  console.log(articles);
   useEffect(() => {
+    console.log(user);
+    const ac = new AbortController();
     fetch(
       `https://newsapi.org/v2/everything?q=${keyword}&language=en&apiKey=38801c44ca8e410290a82a2529881168`
     )
       .then((res) => res.json())
       .then((data) => setArticles(data.articles));
-  }, []);
+    return () => ac.abort();
+  }, [urlInfo]);
   const SaveArticle = async (article) => {
     try {
       if (user.USERINFO) {
         console.log(user.USERINFO);
         const newSavedArt = {
-          uid: user.USERINFO.data.uid,
+          uid: user.USERINFO.uid,
           title: article.title,
           url: article.url,
           image: article.urlToImage,
         };
-        setSavedArticle(newSavedArt);
-        fetch("/addpost", {
+        fetch("/addbookmark", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newSavedArt),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            // console.log("this is the data", data);
-          });
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
-  const ShareArticle = async (e) => {
-    e.preventDefault();
-    console.log("shared");
+  const ShareArticle = async (article) => {
+    console.log(article);
+    if (user.USERINFO && article) {
+      const ArticleInfo = {
+        from: user.USERINFO.uid,
+        user: user.USERINFO,
+        to: "",
+        isread: false,
+        url: article.url,
+        photo: article.urlToImage,
+        content: article.title,
+        message: "",
+      };
+      setModal(true);
+      setModalContent(ArticleInfo);
+      console.log(ArticleInfo);
+    }
   };
-  console.log("rendered");
+
   return articles ? (
     <Wrapper>
-      <Category>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "general" });
-          }}
-        >
-          General
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "business" });
-          }}
-        >
-          Business
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "entertainment" });
-          }}
-        >
-          Entertainment
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "science" });
-          }}
-        >
-          Science
-        </Button>
-        <Button
-          onClick={() => {
-            setUrlInfo({ ...urlInfo, catgory: "technology" });
-          }}
-        >
-          Technology
-        </Button>
-      </Category>
+      <SharedPost
+        setModal={setModal}
+        modal={modal}
+        modalContent={modalContent}
+        setModalContent={setModalContent}
+      />
       {articles.map((article) => {
         return (
           <>
@@ -114,7 +98,9 @@ export default function News() {
                     save
                   </Saved>
                 )}
-                {currentUser && <Shared onClick={ShareArticle}>share</Shared>}
+                {currentUser && (
+                  <Shared onClick={() => ShareArticle(article)}>share</Shared>
+                )}
               </Actions>
             </Article>{" "}
           </>
@@ -158,7 +144,9 @@ const Img = styled.img`
   height: 200px;
 `;
 
-const Article = styled.div``;
+const Article = styled.div`
+  margin: 50px 0;
+`;
 
 const Description = styled.div``;
 

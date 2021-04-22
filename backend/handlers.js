@@ -83,44 +83,75 @@ const getAllBookmarked = async (req, res) => {
   }
 };
 
+const getSharedArticles = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  const to = req.body.to;
+  console.log(to);
+  await client.connect();
+  try {
+    const db = client.db("posts");
+    let result = await db.collection("shared_posts").findOne({ to });
+    res.status(200).json({ status: 200, data: result });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const addToSharedPosts = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
+  await client.connect();
+  try {
+    console.log("this is req.body", req.body);
+    const db = client.db("posts");
+    // let { from, user, to, isread, url, photo, content, message } = req.body;
+    if (req.body.sharedUsersInfo) {
+      req.body.sharedUsersInfo.forEach(async (sharedInfo) => {
+        let { to, url, from } = sharedInfo;
+        let ans = await db.collection("shared_posts").findOne({ to });
+        if (!ans) {
+          const doc = {
+            to: sharedInfo.to,
+            shared: [sharedInfo],
+          };
+          await db.collection("shared_posts").insertOne(doc);
+        } else {
+          let duplicate = ans.shared.find((share) => {
+            return share.url === url;
+          });
+          if (!duplicate) {
+            console.log(sharedInfo);
+            const dbresult = await db.collection("shared_posts").updateOne(
+              { to },
+              {
+                $push: { shared: sharedInfo },
+              }
+            );
+          }
+        }
+      });
+    }
+    res.status(200).json({ status: 200, data: req.body });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const IsRead = async (req, res) => {
+  const client = await MongoClient(MONGO_URI, options);
+  let to = req.body.to;
+  let content = req.body.content;
   try {
     await client.connect();
     const db = client.db("posts");
-    let { from, user, to, isread, url, photo, content, message } = req.body;
-    let ans = await db.collection("shared_posts").findOne({ from });
-    console.log("this is the ans", ans);
-    if (!ans) {
-      const doc = {
-        from: from,
-        shared: [{ user, to, isread, url, photo, content, message }],
-      };
-      await db.collection("shared_posts").insertOne(doc);
-    } else {
-      let duplicate = ans.shared.find((share) => {
-        return share.url === url;
-      });
-      if (!duplicate) {
-        await db.collection("shared_posts").updateOne(
-          { from },
-          {
-            $push: {
-              shared: {
-                user,
-                to,
-                isread,
-                url,
-                photo,
-                content,
-                message,
-              },
-            },
-          }
-        );
-      }
-    }
-    res.status(200).json({ status: 200, data: req.body });
+    let result = await db
+      .collection("shared_posts")
+      .updateOne(
+        { to, "shared.content": content },
+        { $set: { "shared.$.isRead": true } }
+      );
+    console.log(result);
+    let receiver = await db.collection("shared_posts").findOne({ to });
+    res.status(200).json({ status: 200, data: receiver });
   } catch (err) {
     console.log(err);
   }
@@ -161,4 +192,6 @@ module.exports = {
   getAllUsers,
   getFriends,
   addToSharedPosts,
+  getSharedArticles,
+  IsRead,
 };

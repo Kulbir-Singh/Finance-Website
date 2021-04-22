@@ -14,11 +14,15 @@ import Stocks from "./Pages/Stocks";
 import Stock from "./Pages/Stock";
 import Bookmarked from "./Pages/Bookmarked";
 import Search from "./Pages/Search";
+import Notification from "./Pages/Notifcation";
 
 const Page = () => {
+  const user = useSelector((state) => state.userInfo);
   return (
     <Wrapper>
+      <Bar></Bar>
       <Navbar />
+      {user.USERINFO && <Notification />}
       <Switch>
         <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/signup">
@@ -52,16 +56,27 @@ const Page = () => {
     </Wrapper>
   );
 };
+const Bar = styled.p`
+  position: fixed;
+  top: 67px;
+  left: 0;
+  background-color: white;
+  width: 100%;
+  border: 2px solid black;
+`;
 
 const Wrapper = styled.div`
   width: 80%;
   margin-left: 10%;
-  height: 100%;
-  border-radius: 5px;
+  margin-top: 20px;
+  padding-top: 20px;
   grid-area: page;
-  box-shadow: 0 0px 0px 0px white, 0 0px 0px 0px white,
+  height: 100%;
+  /* border-right: 2px solid lightgrey;
+  border-left: 2px solid lightgrey; */
+  /* box-shadow: 0 0px 0px 0px white, 0 0px 0px 0px white,
     12px 0 15px -4px rgba(31, 73, 125, 0.8),
-    -12px 0 15px -4px rgba(31, 73, 125, 0.8);
+    -12px 0 15px -4px rgba(31, 73, 125, 0.8); */
 `;
 
 export default Page;

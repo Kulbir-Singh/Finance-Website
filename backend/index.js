@@ -9,6 +9,8 @@ const {
   getUserInfo,
   getAllUsers,
   getFriends,
+  getSharedArticles,
+  IsRead,
   addToSharedPosts,
 } = require("./handlers");
 const PORT = process.env.PORT || 4000;
@@ -26,6 +28,8 @@ express()
   .post("/getuser", getUserInfo)
   .post("/friendslist", getFriends)
   .post("/addToSharing", addToSharedPosts)
+  .post("/sharedarticles", getSharedArticles)
+  .post("/isread", IsRead)
   // .get("*", (req, res) => {
   //   res.status(404).json({
   //     status: 404,

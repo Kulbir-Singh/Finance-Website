@@ -37,8 +37,8 @@ export default function SharedPost({
   }
   const sharePost = () => {
     if (modalContent && shareTo) {
-      shareTo.map((friend) => {
-        let shareInfo = {
+      const sharedUsersInfo = shareTo.map((friend) => {
+        return {
           from: modalContent.from,
           user: modalContent.user,
           to: friend,
@@ -48,19 +48,19 @@ export default function SharedPost({
           content: modalContent.content,
           message: commentRef.current.value,
         };
-        return fetch("/addToSharing", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(shareInfo),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            shareInfo = {};
-          });
       });
+      console.log("this is shared user info", sharedUsersInfo);
+      fetch("/addToSharing", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sharedUsersInfo }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+        });
     }
   };
   return (
@@ -130,7 +130,8 @@ const Img = styled.img`
 const Modal = styled.div`
   width: 800px;
   height: 500px;
-  border: 2px solid red;
+  border: 2px solid #5c80ff;
+  border-radius: 20px;
   background-color: white;
 `;
 const Background = styled.div`
