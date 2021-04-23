@@ -182,7 +182,6 @@ const Wrapper = styled.div`
   height: 65px;
   padding-left: 200px;
   grid-area: header;
-  background: rgb(4, 28, 97);
   background: linear-gradient(
     0deg,
     rgba(1, 19, 69, 1) 0%,

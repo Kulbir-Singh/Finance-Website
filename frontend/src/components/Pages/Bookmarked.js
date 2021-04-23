@@ -35,7 +35,7 @@ export default function Bookmarked() {
         to: "",
         isread: false,
         url: article.url,
-        photo: article.urlToImage,
+        photo: article.image,
         content: article.title,
         message: "",
       };
@@ -48,7 +48,7 @@ export default function Bookmarked() {
       setUserBookmarks(bookmarks.filter((i) => i.uid === uid));
     }
   }, [uid, bookmarks]);
-  console.log(bookmarks);
+  console.log(modalContent);
   return (
     <Wrapper>
       <SharedPost

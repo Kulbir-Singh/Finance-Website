@@ -73,8 +73,9 @@ export default function SharedPost({
               {allFriends.data &&
                 allFriends.data.map((friend) => {
                   console.log(friend.uid);
+
                   return (
-                    <button
+                    <FriendButton
                       onClick={() => {
                         if (shareTo.length >= 0) {
                           setShareTo([...shareTo, friend.uid]);
@@ -85,32 +86,38 @@ export default function SharedPost({
                         console.log(shareTo);
                       }}
                     >
+                      <FriendImg src={friend.photo} />
                       {friend.username}
-                      {/* <Img src={friend.photo} /> */}
-                    </button>
+                    </FriendButton>
                   );
                 })}
+              <CancelButton
+                onClick={() => {
+                  setModal(false);
+                  setShareTo([]);
+                }}
+              >
+                X
+              </CancelButton>
             </Friends>
-            <input id="comment" ref={commentRef} />
-            <div>
+            <SharedContent>
+              <SharedImg src={modalContent.photo} />
+              <p>{modalContent.content}</p>
+            </SharedContent>
+            <UserInput id="comment" ref={commentRef} />
+            <Action>
               <button
                 onClick={() => {
                   sharePost();
+                  if (shareTo.length > 0) {
+                    setModal(false);
+                  }
                 }}
               >
                 share
               </button>
               <button>post</button>
-            </div>
-            <p>{modalContent.url}</p>
-            <button
-              onClick={() => {
-                setModal(false);
-                setShareTo([]);
-              }}
-            >
-              X
-            </button>
+            </Action>
           </Modal>
         </Background>
       )}
@@ -118,8 +125,57 @@ export default function SharedPost({
   );
 }
 
+const Action = styled.div`
+  > * {
+    margin: 10px;
+    margin-left: 0;
+  }
+`;
+
+const SharedContent = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+const SharedImg = styled.img`
+  width: 50%;
+  height: 200px;
+`;
+
+const UserInput = styled.input`
+  width: 100%;
+  margin-left: 0;
+  text-align: justify;
+  height: 25%;
+`;
+
+const CancelButton = styled.button`
+  margin-left: 73%;
+  width: 45px;
+  height: 45px;
+  font-weight: bold;
+  font-size: 25px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+`;
+
 const Friends = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+`;
+const FriendButton = styled.button`
+  border-radius: 50px;
+  display: flex;
+  flex-direction: column;
+  outline: none;
+  border: none;
+`;
+const FriendImg = styled.img`
+  width: 35px;
 `;
 
 const Img = styled.img`
@@ -130,6 +186,7 @@ const Img = styled.img`
 const Modal = styled.div`
   width: 800px;
   height: 500px;
+  padding: 20px;
   border: 2px solid #5c80ff;
   border-radius: 20px;
   background-color: white;

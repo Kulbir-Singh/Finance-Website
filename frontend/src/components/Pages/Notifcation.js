@@ -84,10 +84,11 @@ const Notifications = styled.div`
   height: 100%;
   padding-top: 50px;
   top: 10%;
+
   background-color: #041c61;
   transform: ${(props) =>
     props.notification ? "translateY(0%)" : "translateY(-150%)"};
-  z-index: ${(props) => (props.notification ? "-1" : "100")};
+  z-index: ${(props) => (props.notification ? "100" : "-1")};
   transition-duration: 1s;
   box-shadow: ${(props) =>
     props.notification
@@ -112,10 +113,13 @@ const Wrapper = styled.div`
   position: fixed;
   top: 85px;
   right: 0;
+  :focus {
+    transform: scale(1);
+  }
+  z-index: 10;
 `;
 
 const Img = styled.img`
-  z-index: 100;
   width: 40px;
   height: 40px;
 `;

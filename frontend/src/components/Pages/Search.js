@@ -27,7 +27,7 @@ export default function News() {
       .then((res) => res.json())
       .then((data) => setArticles(data.articles));
     return () => ac.abort();
-  }, [urlInfo]);
+  }, [keyword]);
   const SaveArticle = async (article) => {
     try {
       if (user.USERINFO) {

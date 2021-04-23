@@ -5,6 +5,23 @@ import { useSelector } from "react-redux";
 import { receiveUserInfo, requestUserInfo } from "../../Actions";
 import SharedPost from "./SharedPost";
 import Notification from "../Pages/Notifcation";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 140,
+  },
+});
 
 export default function News() {
   const [modal, setModal] = useState(false);
@@ -13,6 +30,7 @@ export default function News() {
   const [notifcationModal, setNotificationModal] = useState();
   const { currentUser } = useAuth();
   const user = useSelector((state) => state.userInfo);
+  const classes = useStyles();
   const [urlInfo, setUrlInfo] = useState({
     catgory: "business",
   });
@@ -53,19 +71,6 @@ export default function News() {
     }
   };
   console.log(articles);
-  onscroll = () => {
-    switch (window.scrollY) {
-      case 500:
-        console.log("busines");
-        break;
-      case 600:
-        console.log("technology");
-        break;
-      default:
-        console.log("hello");
-    }
-    console.log(window.scrollY);
-  };
 
   const ShareArticle = async (article) => {
     console.log(article);
@@ -106,34 +111,49 @@ export default function News() {
       {articles.map((article) => {
         return (
           <>
-            <Article>
-              <Img src={article.urlToImage} />
-              <Info>
-                <Title>
-                  {article.title}
-                  <a href={article.url} /> ➤{" "}
-                </Title>{" "}
-                <Description>{article.description}</Description>
-                <Actions>
-                  {/* get all the bookmarked for this user and then use the .find method to see if the current 
-                article is bookmarked if it is then you do a  {bookmarked? saved}{!bookmarked?} */}
-                  {currentUser && (
-                    <Saved
-                      onClick={() => {
-                        SaveArticle(article);
-                      }}
+            <Card className={classes.root}>
+              <Source onClick={() => window.open(article.url)}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={article.urlToImage}
+                    title="Contemplative Reptile"
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {article.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
                     >
-                      save
-                    </Saved>
-                  )}
-                  {currentUser && (
-                    <Shared onClick={() => ShareArticle(article)}>share</Shared>
-                  )}
-                </Actions>
-                {/* <Content>{article.content}</Content> */}
-              </Info>
-              {/* <PublishedAt>{article.publishedAt}</PublishedAt> */}
-            </Article>{" "}
+                      {article.description}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>{" "}
+              </Source>
+              {user.USERINFO && (
+                <CardActions>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => ShareArticle(article)}
+                  >
+                    Share
+                  </Button>
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      SaveArticle(article);
+                    }}
+                  >
+                    Save
+                  </Button>
+                </CardActions>
+              )}
+            </Card>
           </>
         );
       })}
@@ -163,23 +183,16 @@ const Category = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const Button = styled.button`
-  text-decoration: none;
-  outline: none;
-  border: none;
-  color: white;
-  width: 19%;
-  font-size: 18px;
-  background-color: #162252;
-  height: 50px;
-  border: 2px solid blue;
-  border-bottom-left-radius: 10px;
+
+const Source = styled.a`
+  color: black;
 `;
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   grid-column-gap: 30px;
-  height: 100%;
+  grid-row-gap: 30px;
+  height: 95%;
 `;
 
 const Img = styled.img`
@@ -200,11 +213,6 @@ const Article = styled.div`
   height: 250px;
   border-radius: 20px;
 
-  /* -webkit-box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
-    -8px 3px 50px -5px rgba(0, 0, 0, 0.36);
-  box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000,
-    -8px 3px 50px -5px rgba(0, 0, 0, 0.36); */
-  /* border: 2px solid #5c80ff; */
   background-image: linear-gradient(
     to left top,
     #d1e3ff,
@@ -219,8 +227,6 @@ const Article = styled.div`
 const Description = styled.div``;
 
 const PublishedAt = styled.p``;
-
-const Source = styled.p``;
 
 const Content = styled.div`
   width: 100%;

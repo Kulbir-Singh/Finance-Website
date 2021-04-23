@@ -27,12 +27,13 @@ export default function Stocks() {
   }
   return (
     <Wrapper>
+      <StockHeader> Stocks</StockHeader>
       <StockInfo>
         {stocks &&
           stocks.map((stock) => {
             return (
               <Link to={`/stocks/${stock.symbol}/${stock.name}`}>
-                {stock.symbol}
+                <Stock>{stock.symbol}</Stock>
               </Link>
             );
           })}
@@ -40,14 +41,29 @@ export default function Stocks() {
     </Wrapper>
   );
 }
-
+const Stock = styled.div`
+  background-color: lightblue;
+  color: black;
+  height: 30px;
+  margin: 10px;
+  border-radius: 10px;
+  padding-top: 5px;
+  transition-duration: 0.6s;
+  :hover {
+    transform: scale(1.1);
+    background-color: #3b77d9;
+  }
+`;
 const StockInfo = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto auto auto;
-  background-color: #2196f3;
-  padding: 10px;
+  text-align: center;
 `;
 const Wrapper = styled.div`
   height: 100%;
   overflow: auto;
+`;
+const StockHeader = styled.p`
+  font-weight: bold;
+  font-size: 50px;
 `;

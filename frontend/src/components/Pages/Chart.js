@@ -42,7 +42,7 @@ export default function ChartInfo({
       setStockPrice(Price);
     }
   }, [stock]);
-
+  console.log(stock);
   if (stock && intervals && stockPrice) {
     return (
       <Wrapper>
@@ -56,7 +56,7 @@ export default function ChartInfo({
                   data: stockPrice,
                   borderWidth: 1,
                   fill: false,
-                  borderColor: "red",
+                  borderColor: "#191454",
                 },
               ],
             }}
@@ -76,6 +76,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
+  padding-right: 30px;
 `;
 
 const Article = styled.div`
