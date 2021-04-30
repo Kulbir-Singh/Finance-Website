@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useAuth } from "./context/AuthContext";
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  receiveUserInfo,
-  receiveUserInfoError,
-  requestUserInfo,
-} from "../Actions";
+import { receiveUserInfo } from "../Actions";
 import styled, { keyframes } from "styled-components";
 import Connection from "../Resources/connect.jpg";
 
@@ -74,7 +70,11 @@ export default function Login() {
           <Img src={Connection} />
         </ImgContainer>
         <Form onSubmit={handleSubmit}>
-          {error && <alert>{error}</alert>}
+          {error && (
+            <alert>
+              <Alert>{error}</Alert>
+            </alert>
+          )}
           <LoginOptions>
             <SignUpLink
               onClick={() => {
@@ -113,6 +113,13 @@ export default function Login() {
   }
 }
 
+const Alert = styled.p`
+  border: 2px white solid;
+  background-color: white;
+  color: red;
+  text-align: center;
+  margin-bottom: 20px;
+`;
 const LoginButton = styled.button`
   width: 100%;
   height: 60px;

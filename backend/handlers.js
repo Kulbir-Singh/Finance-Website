@@ -15,7 +15,6 @@ const addUserInfo = async (req, res) => {
     await client.connect();
     const db = client.db("posts");
     const result = await db.collection("users").insertOne(req.body);
-    console.log("this is the length", result);
     assert.equal(1, result.insertedCount);
     res.status(200).json({ status: 200, data: req.body });
   } catch (err) {
@@ -38,18 +37,15 @@ const getUserInfo = async (req, res) => {
 };
 
 const getFriends = async (req, res) => {
-  console.log("this is", req.body.data);
   const client = await MongoClient(MONGO_URI, options);
   try {
     await client.connect();
     const db = client.db("posts");
     const result = await db.collection("users").find().toArray();
-    console.log(result);
     let uid = req.body.data;
     let friends = result.filter(
       (friend) => friend.following.filter((user) => uid === user).length > 0
     );
-    // console.log("this is the friends list", friends);
     res.status(200).json({ status: 200, data: friends });
   } catch (err) {
     console.log(err);
@@ -62,7 +58,6 @@ const getAllUsers = async (req, res) => {
     await client.connect();
     const db = client.db("posts");
     const result = await db.collection("users").find().toArray();
-    console.log(result);
     res.status(200).json({ status: 200, data: result });
   } catch (err) {
     console.log(err);
@@ -86,7 +81,6 @@ const getAllBookmarked = async (req, res) => {
 const getSharedArticles = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
   const to = req.body.to;
-  console.log(to);
   await client.connect();
   try {
     const db = client.db("posts");
@@ -101,9 +95,7 @@ const addToSharedPosts = async (req, res) => {
   const client = await MongoClient(MONGO_URI, options);
   await client.connect();
   try {
-    console.log("this is req.body", req.body);
     const db = client.db("posts");
-    // let { from, user, to, isread, url, photo, content, message } = req.body;
     if (req.body.sharedUsersInfo) {
       req.body.sharedUsersInfo.forEach(async (sharedInfo) => {
         let { to, url, from } = sharedInfo;
@@ -119,7 +111,6 @@ const addToSharedPosts = async (req, res) => {
             return share.url === url;
           });
           if (!duplicate) {
-            console.log(sharedInfo);
             const dbresult = await db.collection("shared_posts").updateOne(
               { to },
               {
@@ -149,7 +140,6 @@ const IsRead = async (req, res) => {
         { to, "shared.content": content },
         { $set: { "shared.$.isRead": true } }
       );
-    console.log(result);
     let receiver = await db.collection("shared_posts").findOne({ to });
     res.status(200).json({ status: 200, data: receiver });
   } catch (err) {
@@ -164,7 +154,6 @@ const addToBookmarked = async (req, res) => {
     const db = client.db("posts");
     let { uid, title, url, image } = req.body;
     let ans = await db.collection("bookmarked").findOne({ uid });
-    console.log(ans);
     if (!ans) {
       const doc = { uid: uid, bookmarks: [{ title, url, image }] };
       await db.collection("bookmarked").insertOne(doc);
