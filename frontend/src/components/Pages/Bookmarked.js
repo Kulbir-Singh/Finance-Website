@@ -19,7 +19,7 @@ export default function Bookmarked() {
       .then((data) => setBookmarks(data.data));
     return () => ac.abort();
   }, []);
-
+  console.log("hhelllo");
   useEffect(() => {
     if (user) {
       setUid(user.USERINFO.uid);
