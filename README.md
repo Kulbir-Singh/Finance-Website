@@ -10,7 +10,7 @@ The website is built for users that want to learn or share their ideas related t
 
 
 ### Homepage
-
+This page shows all the sections a user can access.
 <img src="./frontend/src/Resources/financehomepage.PNG">
 <img src="./frontend/src/Resources/financehomepage1.PNG">
 <img src="./frontend/src/Resources/financehomepage2.PNG">
@@ -20,23 +20,22 @@ The website is built for users that want to learn or share their ideas related t
 <img src="./frontend/src/Resources/financelogin.PNG">
 
 ### The Sign Up
-
 <img src="./frontend/src/Resources/financesignup.PNG">
 
-### User Profile
-
-<img src="./frontend/src/Resources/financehomepage.PNG">
 
 ### Notification
-
+When the user receives notifications the notification icon will light up.
 <img src="./frontend/src/Resources/financenotifcations.PNG">
+When all the notifications are read the icon will change.
 <img src="./frontend/src/Resources/financenotification1.PNG">
 
 
 ### Stocks
+This page shows all the stocks in the NASDAQ from A-Z. 
 
 <img src="./frontend/src/Resources/financestocks.PNG">
 
-### Stocks
+### Stock
+Once a stock has be selected this page shows that stocks chart, news and fiancial information.  
 
 <img src="./frontend/src/Resources/financestockinfo.PNG">
