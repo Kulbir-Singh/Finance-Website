@@ -11,6 +11,7 @@ The website is built for users that want to learn or share their ideas related t
 
 ### Homepage
 
+<img src="./frontend/src/Resources/financehomepage.PNG">
 
 ### The Login Page
 
