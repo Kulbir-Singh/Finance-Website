@@ -17,20 +17,22 @@ The website is built for users that want to learn or share their ideas related t
 
 ### The Login Page
 
-<img src="./frontend/src/Resources/financehomepage.PNG">
+<img src="./frontend/src/Resources/financelogin.PNG">
 
 ### The Sign Up
 
-<img src="./frontend/src/Resources/financehomepage.PNG">
+<img src="./frontend/src/Resources/financesignup.PNG">
 
 ### User Profile
 
 <img src="./frontend/src/Resources/financehomepage.PNG">
 
-### Bookmarks
+### Notification
 
-<img src="./frontend/src/Resources/financehomepage.PNG">
+<img src="./frontend/src/Resources/financenotification.PNG">
+<img src="./frontend/src/Resources/financenotification1.PNG">
 
-### Headlines
 
-<img src="./frontend/src/Resources/financehomepage.PNG">
+### Stocks
+
+<img src="./frontend/src/Resources/financestocks.PNG">
