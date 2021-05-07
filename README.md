@@ -12,14 +12,25 @@ The website is built for users that want to learn or share their ideas related t
 ### Homepage
 
 <img src="./frontend/src/Resources/financehomepage.PNG">
+<img src="./frontend/src/Resources/financehomepage1.PNG">
+<img src="./frontend/src/Resources/financehomepage2.PNG">
 
 ### The Login Page
 
+<img src="./frontend/src/Resources/financehomepage.PNG">
+
 ### The Sign Up
+
+<img src="./frontend/src/Resources/financehomepage.PNG">
 
 ### User Profile
 
+<img src="./frontend/src/Resources/financehomepage.PNG">
+
 ### Bookmarks
+
+<img src="./frontend/src/Resources/financehomepage.PNG">
 
 ### Headlines
 
+<img src="./frontend/src/Resources/financehomepage.PNG">
