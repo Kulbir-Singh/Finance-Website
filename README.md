@@ -29,7 +29,7 @@ The website is built for users that want to learn or share their ideas related t
 
 ### Notification
 
-<img src="./frontend/src/Resources/financenotification.PNG">
+<img src="./frontend/src/Resources/financenotifications.PNG">
 <img src="./frontend/src/Resources/financenotification1.PNG">
 
 
