@@ -36,3 +36,7 @@ The website is built for users that want to learn or share their ideas related t
 ### Stocks
 
 <img src="./frontend/src/Resources/financestocks.PNG">
+
+### Stocks
+
+<img src="./frontend/src/Resources/financestockinfo.PNG">
