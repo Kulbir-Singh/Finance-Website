@@ -42,16 +42,17 @@ export default function Stocks() {
   );
 }
 const Stock = styled.div`
-  background-color: lightblue;
+  background-color: white;
   color: black;
   height: 30px;
   margin: 10px;
   border-radius: 10px;
+  border: 2px solid #e9eaf0;
   padding-top: 5px;
   transition-duration: 0.6s;
   :hover {
     transform: scale(1.1);
-    background-color: #3b77d9;
+    background-color: #00aaff;
   }
 `;
 const StockInfo = styled.div`

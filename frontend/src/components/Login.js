@@ -45,7 +45,7 @@ export default function Login() {
         })
           .then((res) => res.json())
           .then((data) => data);
-        console.log(userInfo);
+        console.log("this is the userinfo", userInfo);
         dispatch(receiveUserInfo(userInfo.data));
         localStorage.setItem("uid", JSON.stringify(userInfo));
         setLoading(false);
@@ -109,7 +109,7 @@ export default function Login() {
       </Wrapper>
     );
   } else {
-    return <Redirect to="/content"></Redirect>;
+    return <Redirect to="/login"></Redirect>;
   }
 }
 
@@ -127,7 +127,7 @@ const LoginButton = styled.button`
   border: 2px solid grey;
   font-size: 25px;
   color: white;
-  background-color: #041c61;
+  background-color: #00aaff;
 `;
 const LoginOptions = styled.div`
   display: flex;
@@ -139,7 +139,7 @@ const SignupOptions = styled.div`
   display: flex;
   color: white;
   justify-content: center;
-  background-color: #041c61;
+  background-color: #00aaff;
 `;
 const H1 = styled.div`
   color: white;
@@ -159,32 +159,32 @@ const SignUpLink = styled.button`
   background-color: darkgrey;
 `;
 const ImgContainer = styled.div`
-  padding-right: 150px;
-  margin-top: 100px;
+  width: 50%;
   border-right: 2px solid grey;
 `;
 const Img = styled.img`
-  width: 600px;
+  width: 100%;
   height: 600px;
 `;
 const Form = styled.form`
-  display: flex;
-  height: 500px;
-  width: 30%;
-  margin-left: 100px;
+  height: 75%;
+  width: 50%;
+  /* margin-left: 100px;
   margin-top: 100px;
-  margin-right: 50px;
+  margin-right: 50px; */
+  margin: 5%;
   padding: 30px;
   border-radius: 4px;
-  background-color: #010718;
-  flex-direction: column;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 69vh;
+  border: 2px solid #e9eaf0;
+  margin: 2.5%;
+  background-color: white;
+  height: 90%;
 `;
 
 const morph = keyframes`
@@ -196,27 +196,26 @@ const morph = keyframes`
 const UserNameInput = styled.input`
   height: 40px;
   width: 100%;
-  color: white;
-  margin: 0 0 35px 0;
+  color: black;
+  margin: 8.33% 0 0 0;
   border: 2px solid grey;
   border-radius: 3px;
-  animation: ${morph} 0.75s linear;
-  background-color: #010718;
+  /* animation: ${morph} 0.75s linear; */
+
   ::placeholder {
-    color: white;
+    color: grey;
   }
 `;
 
 const PasswordInput = styled.input`
   height: 40px;
   width: 100%;
-  color: white;
-  animation: ${morph} 0.75s linear;
-  margin: 0 0 35px 0;
+  color: black;
+  /* animation: ${morph} 0.75s linear; */
+  margin: 8.33% 0 8.33% 0;
   border: 2px solid grey;
   border-radius: 3px;
-  background-color: #010718;
   ::placeholder {
-    color: white;
+    color: grey;
   }
 `;

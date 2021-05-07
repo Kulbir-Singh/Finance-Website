@@ -9,7 +9,9 @@ import {
   receiveUserInfo,
   receiveUserInfoError,
 } from "../Actions";
-import { getUserInformation } from "../Reducers/userInfoReducer";
+import userInfoReducer, {
+  getUserInformation,
+} from "../Reducers/userInfoReducer";
 import styled, { keyframes } from "styled-components";
 
 export default function Signup() {
@@ -78,6 +80,29 @@ export default function Signup() {
           stocks: [],
           categories: [],
         };
+        let sharedUsersInfo = [
+          {
+            from: "",
+            user: "",
+            to: info.user.uid,
+            isRead: false,
+            url: "",
+            photo: "",
+            content: "",
+            message: "",
+          },
+        ];
+        fetch("/addToSharing", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ sharedUsersInfo }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
         fetch("/adduser", {
           method: "POST",
           headers: {
@@ -175,12 +200,11 @@ export default function Signup() {
   );
 }
 const ImgContainer = styled.div`
-  padding-right: 150px;
-  margin-top: 100px;
+  width: 50%;
   border-right: 2px solid grey;
 `;
 const Img = styled.img`
-  width: 600px;
+  width: 100%;
   height: 600px;
 `;
 const LoginOptions = styled.div`
@@ -194,7 +218,7 @@ const SignupOptions = styled.div`
   display: flex;
   color: white;
   justify-content: center;
-  background-color: #041c61;
+  background-color: #00aaff;
 `;
 
 const LoginLink = styled.button`
@@ -214,13 +238,12 @@ const morph = keyframes`
 `;
 const Form = styled.form`
   padding: 30px;
-  margin-left: 100px;
-  margin-top: 100px;
-  margin-right: 50px;
   border-radius: 4px;
-  height: 500px;
-  width: 30%;
-  background-color: #010718;
+  margin: 5%;
+  /* height: 500px; */
+  width: 50%;
+  height: 75%;
+  background-color: white;
 `;
 const SignUpButton = styled.button`
   width: 100%;
@@ -229,7 +252,7 @@ const SignUpButton = styled.button`
   border: 2px solid grey;
   font-size: 25px;
   color: white;
-  background-color: #041c61;
+  background-color: #00aaff;
 `;
 const H1 = styled.div`
   color: white;
@@ -246,7 +269,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 69vh;
+  background-color: white;
+  border: 2px solid #e9eaf0;
+  margin: 2.5%;
+  height: 90%;
 `;
 const Password2 = styled.div`
   margin: 0 0 35px 0;
@@ -265,49 +291,48 @@ const UserName = styled.div`
 const Password2Input = styled.input`
   height: 40px;
   width: 100%;
-  color: white;
+  color: black;
   border: 2px solid grey;
   border-radius: 3px;
-  animation: ${morph} 0.75s linear;
-  background-color: #010718;
+  /* animation: ${morph} 0.75s linear; */
+  background-color: white;
   ::placeholder {
-    color: white;
+    color: grey;
   }
 `;
 const PasswordInput = styled.input`
   height: 40px;
-  background-color: #010718;
-  color: white;
+  color: black;
   border: 2px solid grey;
   border-radius: 3px;
-  animation: ${morph} 0.75s linear;
-  background-color: #010718;
+  /* animation: ${morph} 0.75s linear; */
+  background-color: white;
   ::placeholder {
-    color: white;
+    color: grey;
   }
   width: 100%;
 `;
 const EmailInput = styled.input`
   height: 40px;
   width: 100%;
-  color: white;
+  color: black;
   border: 2px solid grey;
   border-radius: 3px;
-  background-color: #010718;
-  animation: ${morph} 0.75s linear;
+  background-color: white;
+  /* animation: ${morph} 0.75s linear; */
   ::placeholder {
-    color: white;
+    color: grey;
   }
 `;
 const UserNameInput = styled.input`
   height: 40px;
-  color: white;
+  color: black;
   width: 100%;
   border: 2px solid grey;
   border-radius: 3px;
-  animation: ${morph} 0.75s linear;
-  background-color: #010718;
+  /* animation: ${morph} 0.75s linear; */
+  background-color: white;
   ::placeholder {
-    color: white;
+    color: grey;
   }
 `;

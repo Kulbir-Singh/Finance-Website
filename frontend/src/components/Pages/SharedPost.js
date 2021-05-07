@@ -73,7 +73,6 @@ export default function SharedPost({
               {allFriends.data &&
                 allFriends.data.map((friend) => {
                   console.log(friend.uid);
-
                   return (
                     <FriendButton
                       onClick={() => {

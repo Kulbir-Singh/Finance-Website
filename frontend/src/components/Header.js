@@ -5,6 +5,11 @@ import { useAuth } from "./context/AuthContext";
 import { receiveUserInfo } from "../Actions";
 import { useDispatch, useSelector } from "react-redux";
 import subVault from "../Resources/vaultLogo.png";
+import Searchicon from "../Resources/searchicon.png";
+import Noti from "../Resources/bellicon.png";
+import Notification from "./Pages/Notifcation";
+import UnreadNoti from "../Resources/bellicon1.png";
+import LoginIcon from "../Resources/powerswitch.png";
 
 const Header = () => {
   const user = useSelector((state) => state.userInfo);
@@ -14,7 +19,14 @@ const Header = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [value, setValue] = useState("");
-  const handleKeyDown = () => {};
+  const [unreadNotifications, setUnreadNotifications] = useState();
+  const [notification, setNotification] = useState(false);
+  const handleKeyDown = (event) => {
+    if (event.keyCode === 13) {
+      history.push(`/search/${value}`);
+    }
+  };
+
   const handleCLick = async () => {
     setError("");
     try {
@@ -26,44 +38,47 @@ const Header = () => {
       setError("failed to logout");
     }
   };
-  console.log(user);
+
   return (
     <Wrapper>
-      <Logo onClick={() => history.push("/")}>Vault </Logo>
-      {/* <SubLogo src={subVault} /> */}
-      <HeaderOptions>
-        <Link to="/news">News</Link>
-        <Link to="/stocks">Stocks</Link>
-        <img src={receiveUserInfo} />
-      </HeaderOptions>
       <SearchBar>
+        <Button onClick={() => history.push(`/search/${value}`)}>
+          <SearchImg src={Searchicon} />
+        </Button>
         <Input
           type="text"
           value={value}
           onChange={(ev) => setValue(ev.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <Button onClick={() => history.push(`/search/${value}`)}>
-          Search
-          {/* <Link to={`/search/${value}`}></Link> */}
-        </Button>
-      </SearchBar>{" "}
+      </SearchBar>
       {user && (
         <UserInfo>
-          {" "}
-          {user.USERINFO && <UserImg src={user.USERINFO.photo} />}
-          {user.USERINFO && (
-            <UserName>Welcome, {user.USERINFO.username}</UserName>
-          )}
-          <LoginBtn onClick={handleCLick}>
-            {currentUser ? "Logout" : "Login"}
+          <NotificationIcon onClick={() => setNotification(!notification)}>
+            {unreadNotifications?.length <= 0 && <Img src={Noti} />}
+            {unreadNotifications?.length > 0 && <Img src={UnreadNoti} />}
+            {/* {<NotiImg src={Noti} />} */}
+            {user.USERINFO && (
+              <Notification
+                notification={notification}
+                setNotification={setNotification}
+                unreadNotifications={unreadNotifications}
+                setUnreadNotifications={setUnreadNotifications}
+              />
+            )}
+          </NotificationIcon>
+          <LoginBtn user={user} onClick={handleCLick}>
+            {<LoginImg src={LoginIcon} />}
           </LoginBtn>
         </UserInfo>
-      )}{" "}
+      )}
     </Wrapper>
   );
 };
-
+const Img = styled.img`
+  width: 25px;
+  height: 25px;
+`;
 const HeaderOptions = styled.div`
   display: flex;
   width: 65%;
@@ -72,65 +87,76 @@ const HeaderOptions = styled.div`
   }
 `;
 
-const LoginBtn = styled.button`
-  height: 30px;
-  border-radius: 20px;
-  outline: none;
-  background-color: #010718;
-  color: white;
-  margin-right: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border: 3px solid white;
-  transition-duration: 0.75s;
-  :hover {
-    color: black;
-    border: 3px solid black;
-    background-color: white;
-  }
+const LoginImg = styled.img`
+  width: 25px;
 `;
+
+const NotiImg = styled.img`
+  width: 25px;
+  height: 25px;
+`;
+
+const SearchImg = styled.img`
+  width: 23px;
+  height: 23px;
+`;
+
+const NotificationIcon = styled.button`
+  font-size: 16px;
+  width: 40px;
+  height: 100%;
+  background-color: white;
+  border: none;
+  margin: 0 30px;
+  outline: none;
+`;
+
+const LoginBtn = styled.button`
+  outline: none;
+  height: 100%;
+  font-size: 16px;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+`;
+
 const SubLogo = styled.img`
   width: 60px;
   height: 50px;
 `;
 
 const Button = styled.button`
-  background-color: #010718;
   text-decoration: none;
+  background-color: white;
   cursor: pointer;
-  border: 2px solid white;
+  border: none;
   cursor: pointer;
   outline: none;
   margin-left: -3px;
   font-size: 15px;
   color: white;
-  border-radius: 20px;
   transition-duration: 0.75s;
   :hover {
     color: black;
-    border: 3px solid black;
-    background-color: white;
+    transform: scale(1.1);
+    background-color: transparent;
   }
 `;
 
 const SearchBar = styled.div`
   /* position: absolute; */
   display: flex;
-  right: 425px;
-  margin-right: 20px;
-  background-color: white;
-  border-radius: 20px;
-  border: 2px solid white;
+  width: 80%;
 `;
 
 const Input = styled.input`
-  width: 250px;
-  height: 30px;
+  width: 100%;
+  height: 100%;
   outline: none;
+  font-size: 25px;
+  color: #929396;
   text-decoration: none;
   border: none;
-  border-bottom-left-radius: 20px;
-  border-top-left-radius: 20px;
 `;
 
 const Logo = styled.button`
@@ -147,9 +173,7 @@ const Logo = styled.button`
   text-decoration: none;
   background-color: transparent;
   transition-duration: 0.5s;
-
   :hover {
-    border: 5px solid white;
     border-radius: 5px;
   }
 `;
@@ -157,7 +181,6 @@ const Logo = styled.button`
 const UserImg = styled.img`
   width: 50px;
   background-color: white;
-  border: 3px solid white;
   border-radius: 25px;
   margin: 10px;
   height: 50px;
@@ -176,18 +199,12 @@ const UserName = styled.div`
 `;
 const Wrapper = styled.div`
   display: flex;
-  position: fixed;
+  /* position: fixed; */
+  justify-content: space-between;
+  padding: 0 10px;
   width: 100%;
-  align-items: center;
-  height: 65px;
-  padding-left: 200px;
+  border-bottom: 3px solid #e9eaf0;
   grid-area: header;
-  background: linear-gradient(
-    0deg,
-    rgba(1, 19, 69, 1) 0%,
-    rgba(14, 18, 32, 1) 100%
-  );
-  z-index: 2;
 `;
 
 export default Header;

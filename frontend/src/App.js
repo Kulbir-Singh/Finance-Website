@@ -29,8 +29,8 @@ function App() {
         <Router>
           <Wrapper>
             <Header />
+            <Sidebar />
             <Page />
-            <Footer />
           </Wrapper>
         </Router>
       </AuthProvider>
@@ -46,12 +46,11 @@ const Wrapper = styled.div`
   padding: none;
   margin: none;
   background-color: white;
-  grid-template-rows: 75px 100% 50px;
-  grid-template-columns: 10% 75% 15%;
+  grid-template-rows: 7vh 93vh;
+  grid-template-columns: 15% 85%;
   grid-template-areas:
-    "header header header"
-    "page page page"
-    "footer footer footer";
+    "sidebar header header"
+    "sidebar page page";
 `;
 
 export default App;

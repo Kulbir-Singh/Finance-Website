@@ -20,9 +20,8 @@ const Page = () => {
   const user = useSelector((state) => state.userInfo);
   return (
     <Wrapper>
-      <Bar></Bar>
-      <Navbar />
-      {user.USERINFO && <Notification />}
+      {/* <Navbar /> */}
+      {/* {user.USERINFO && <Notification />} */}
       <Switch>
         <PrivateRoute exact path="/profile" component={Profile} />
         <Route path="/signup">
@@ -60,16 +59,16 @@ const Bar = styled.p`
   position: fixed;
   top: 67px;
   left: 0;
-  background-color: white;
+  background-color: #f5f6fa;
   width: 100%;
-  border: 2px solid black;
 `;
 
 const Wrapper = styled.div`
-  width: 80%;
-  margin-left: 10%;
+  width: 100%;
+  background-color: #f5f6fa;
+  /* margin-left: 10%;
   margin-top: 20px;
-  padding-top: 20px;
+  padding-top: 20px; */
   grid-area: page;
   height: 100%;
   /* border-right: 2px solid lightgrey;

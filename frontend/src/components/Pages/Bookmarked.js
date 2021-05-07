@@ -21,7 +21,7 @@ export default function Bookmarked() {
   }, []);
   console.log("hhelllo");
   useEffect(() => {
-    if (user) {
+    if (user.USERINFO) {
       setUid(user.USERINFO.uid);
       console.log(user);
     }

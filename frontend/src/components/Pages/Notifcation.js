@@ -4,11 +4,15 @@ import styled from "styled-components";
 import GotNotification from "../../Resources/notification.png";
 import NoNotification from "../../Resources/notification1.png";
 
-export default function Notification() {
+export default function Notification({
+  notification,
+  setNotification,
+  unreadNotifications,
+  setUnreadNotifications,
+}) {
   const user = useSelector((state) => state.userInfo);
-  const [notification, setNotification] = useState(false);
+
   const [incomingNotifications, setIncomingNotifications] = useState();
-  const [unreadNotifications, setUnreadNotifications] = useState();
   const [readNoti, setReadNoti] = useState(false);
 
   const setRead = (content) => {
@@ -53,12 +57,6 @@ export default function Notification() {
 
   return (
     <Wrapper>
-      {user && (
-        <Icon onClick={() => setNotification(!notification)}>
-          {unreadNotifications?.length <= 0 && <Img src={NoNotification} />}
-          {unreadNotifications?.length > 0 && <Img src={GotNotification} />}
-        </Icon>
-      )}
       <Notifications notification={notification}>
         {unreadNotifications &&
           unreadNotifications.map((item) => {
@@ -79,13 +77,16 @@ export default function Notification() {
 
 const IndividualNoti = styled.button`
   margin: 0 0 20px 0;
+  text-decoration: none;
+  background-color: white;
+  border: none;
 `;
 const Notifications = styled.div`
   height: 100%;
   padding-top: 50px;
-  top: 10%;
-
-  background-color: #041c61;
+  top: 0%;
+  background-color: white;
+  border: 2px solid #e9eaf0;
   transform: ${(props) =>
     props.notification ? "translateY(0%)" : "translateY(-150%)"};
   z-index: ${(props) => (props.notification ? "100" : "-1")};
@@ -96,30 +97,15 @@ const Notifications = styled.div`
       : "0 0px 0px 0px white, 0 0px 0px 0px white,12px 0 15px -4px rgba(31, 73, 125, 0.8),-12px 0 15px -4px rgba(31, 73, 125, 0.8)"};
 `;
 
-const Icon = styled.button`
-  position: absolute;
-  right: 5px;
-  height: 45px;
-  width: 45px;
-  z-index: 10;
-  background-color: #041c61;
-  border-radius: 20px;
-  border: none;
-  outline: none;
-`;
 const Wrapper = styled.div`
   width: 300px;
   height: 93%;
   position: fixed;
-  top: 85px;
+  top: 6.75vh;
+
   right: 0;
   :focus {
     transform: scale(1);
   }
   z-index: 10;
-`;
-
-const Img = styled.img`
-  width: 40px;
-  height: 40px;
 `;

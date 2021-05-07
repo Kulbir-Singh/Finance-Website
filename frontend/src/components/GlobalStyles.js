@@ -18,7 +18,7 @@ export default createGlobalStyle`
   input, button, select, option,
   h1, h2, h3, h4, h5, h6, p,
   span, strong, text {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
     //font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   }
   html, body {
@@ -55,7 +55,8 @@ export default createGlobalStyle`
     color:white;
     text-decoration:none;
     outline:none;
-    font-size:15px;
+    padding:none;
+    margin:none;
   }
   ol, ul {
     list-style: none;

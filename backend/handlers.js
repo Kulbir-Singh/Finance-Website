@@ -96,11 +96,18 @@ const addToSharedPosts = async (req, res) => {
   await client.connect();
   try {
     const db = client.db("posts");
+    console.log(req.body);
     if (req.body.sharedUsersInfo) {
+      console.log(req.body.sharedUsersInfo);
       req.body.sharedUsersInfo.forEach(async (sharedInfo) => {
         let { to, url, from } = sharedInfo;
+        console.log(from);
         let ans = await db.collection("shared_posts").findOne({ to });
         if (!ans) {
+          if (from === "") {
+            let temp = { to, shared: [] };
+            return await db.collection("shared_posts").insertOne(temp);
+          }
           const doc = {
             to: sharedInfo.to,
             shared: [sharedInfo],
@@ -110,6 +117,7 @@ const addToSharedPosts = async (req, res) => {
           let duplicate = ans.shared.find((share) => {
             return share.url === url;
           });
+          console.log(from);
           if (!duplicate) {
             const dbresult = await db.collection("shared_posts").updateOne(
               { to },
