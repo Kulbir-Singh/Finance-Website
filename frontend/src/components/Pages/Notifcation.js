@@ -56,7 +56,7 @@ export default function Notification({
   }, [incomingNotifications, readNoti]);
 
   return (
-    <Wrapper>
+    <Wrapper notification={notification}>
       <Notifications notification={notification}>
         {unreadNotifications &&
           unreadNotifications.map((item) => {
@@ -88,8 +88,7 @@ const Notifications = styled.div`
   background-color: white;
   border: 2px solid #e9eaf0;
   transform: ${(props) =>
-    props.notification ? "translateY(0%)" : "translateY(-150%)"};
-  z-index: ${(props) => (props.notification ? "100" : "-1")};
+    props.notification ? "translateX(0%)" : "translateY(-150%)"};
   transition-duration: 1s;
   box-shadow: ${(props) =>
     props.notification
@@ -99,10 +98,11 @@ const Notifications = styled.div`
 
 const Wrapper = styled.div`
   width: 300px;
-  height: 93%;
+  height: ${(props)=>props.notification?"93%":"0%"};
+  transition-duration: 1s;
+  opacity:${(props)=>props.notification? "1":"0"};
   position: fixed;
-  top: 6.75vh;
-
+   top:${(props)=>props.notification?"6.75vh":"0"} ;
   right: 0;
   :focus {
     transform: scale(1);

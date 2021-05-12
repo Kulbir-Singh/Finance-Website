@@ -58,10 +58,10 @@ export default function Homepage() {
         <News>
           <Tag>News </Tag>
           <Category>
-            <p>Business ></p>
-            <p>Sports ></p>
-            <p>Entertainment ></p>
-            <p>Science ></p>
+            <p>Business ˃</p>
+            <p>Sports ˃</p>
+            <p>Entertainment ˃</p>
+            <p>Science ˃</p>
           </Category>
           <VertBar></VertBar>
           <Articles>

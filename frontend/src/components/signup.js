@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
+import userIcon from "../Resources/user.svg"
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Connection from "../Resources/connect.jpg";
@@ -74,7 +75,7 @@ export default function Signup() {
             : UserNameRef.current.value,
           photo: info.user.photoUrl
             ? info.user.photoUrl
-            : "https://s3.amazonaws.com/appforest_uf/f1512936020165x278911292087286720/A.png",
+            : userIcon,
           following: [],
           followers: [],
           stocks: [],

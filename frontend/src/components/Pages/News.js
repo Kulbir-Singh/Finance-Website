@@ -4,7 +4,6 @@ import { useAuth } from "../context/AuthContext";
 import { useSelector } from "react-redux";
 import { receiveUserInfo, requestUserInfo } from "../../Actions";
 import SharedPost from "./SharedPost";
-import Notification from "../Pages/Notifcation";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -23,14 +22,14 @@ const useStyles = makeStyles({
   },
 });
 
-export default function News() {
+export default function News(req) {
   const [modal, setModal] = useState(false);
   const [modalContent, setModalContent] = useState();
   const [articles, setArticles] = useState();
-  const [notifcationModal, setNotificationModal] = useState();
   const { currentUser } = useAuth();
   const user = useSelector((state) => state.userInfo);
   const classes = useStyles();
+  console.log(window.location);
   const [urlInfo, setUrlInfo] = useState({
     catgory: "business",
   });

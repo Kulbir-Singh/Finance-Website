@@ -23,8 +23,11 @@ const Sidebar = () => {
         )}
         <Discover>
           <h3>Discover</h3>
-          <Link to="/">
+          <Link to="/posts">
             <p>Home</p>
+          </Link>
+          <Link to="/">
+            <p>Explore</p>
           </Link>
           {/* <Link to="/featured">
             <p>Featured</p>

@@ -14,6 +14,7 @@ import Stocks from "./Pages/Stocks";
 import Stock from "./Pages/Stock";
 import Bookmarked from "./Pages/Bookmarked";
 import Search from "./Pages/Search";
+import Posts from "./Pages/Posts";
 import Notification from "./Pages/Notifcation";
 
 const Page = () => {
@@ -50,6 +51,9 @@ const Page = () => {
         </Route>
         <Route exact path="/bookmarks">
           <Bookmarked />
+        </Route>
+        <Route exact path="/posts">
+          <Posts />
         </Route>
       </Switch>
     </Wrapper>
