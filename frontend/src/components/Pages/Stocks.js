@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 // ask how to use procces.env
 export default function Stocks() {
+  const letter = useParams();
   const [stocks, setStocks] = useState();
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   useEffect(() => {
     const ac = new AbortController();
     fetch(
@@ -23,24 +25,38 @@ export default function Stocks() {
     return () => ac.abort();
   }, []);
   if (stocks) {
-    console.log(stocks);
   }
   return (
     <Wrapper>
       <StockHeader> Stocks</StockHeader>
+      <Alpha>
+        {alphabet.map((alpha) => {
+          return <Link to={`/stocks/${alpha}`}>{alpha}</Link>;
+        })}
+      </Alpha>
       <StockInfo>
         {stocks &&
           stocks.map((stock) => {
-            return (
-              <Link to={`/stocks/${stock.symbol}/${stock.name}`}>
-                <Stock>{stock.symbol}</Stock>
-              </Link>
-            );
+            let name = stock.symbol.split("");
+            if (name[0] === letter.alpha) {
+              return (
+                <Link to={`/stocks/${stock.symbol}/${stock.name}`}>
+                  <Stock>{stock.symbol}</Stock>
+                </Link>
+              );
+            }
           })}
       </StockInfo>
     </Wrapper>
   );
 }
+
+const Alpha = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+`;
+
 const Stock = styled.div`
   background-color: white;
   color: black;

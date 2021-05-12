@@ -52,7 +52,6 @@ export default createGlobalStyle`
     display: block;
   }
   a{
-    color:white;
     text-decoration:none;
     outline:none;
     padding:none;

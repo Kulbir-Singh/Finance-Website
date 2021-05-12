@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
-import userIcon from "../Resources/user.svg"
+import userIcon from "../Resources/user.svg";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import Connection from "../Resources/connect.jpg";
@@ -21,6 +21,8 @@ export default function Signup() {
 
   const passwordRef = useRef();
   const UserNameRef = useRef();
+  const LastNameRef = useRef();
+  const FirstNameRef = useRef();
   const passwordConfirmationRef = useRef();
   const history = useHistory();
   const { signup, currentUser } = useAuth();
@@ -70,12 +72,12 @@ export default function Signup() {
         let userInfo = {
           email: info.user.email,
           uid: info.user.uid,
+          firstName: FirstNameRef.current.value,
+          lastName: LastNameRef.current.value,
           username: info.user.displayName
             ? info.user.displayName
             : UserNameRef.current.value,
-          photo: info.user.photoUrl
-            ? info.user.photoUrl
-            : userIcon,
+          photo: info.user.photoUrl ? info.user.photoUrl : userIcon,
           following: [],
           followers: [],
           stocks: [],
@@ -131,7 +133,6 @@ export default function Signup() {
       <ImgContainer>
         <Img src={Connection} />
       </ImgContainer>
-
       <Form onSubmit={handleSubmit}>
         {error && <alert>{error}</alert>}
         <LoginOptions>
@@ -145,6 +146,31 @@ export default function Signup() {
           </LoginLink>
         </LoginOptions>
         <H1>SIGN UP</H1>
+        <UserBio>
+          <FirstName>
+            <label for="firstName"></label>
+            <FirstNameInput
+              id="firstName"
+              name="firstName"
+              type="text"
+              ref={FirstNameRef}
+              onBlur={(ev) => checkUserName(ev.target.value)}
+              placeholder="firstName"
+              required
+            />
+          </FirstName>
+          <LastName>
+            <label for="lastName"></label>
+            <LastNameInput
+              id="lastName"
+              name="lastName"
+              type="text"
+              ref={LastNameRef}
+              placeholder="lastName"
+              required
+            />
+          </LastName>
+        </UserBio>
         <UserBio>
           <UserName>
             <label for="UserName"></label>
@@ -289,6 +315,14 @@ const UserName = styled.div`
   margin: 0 5px 35px 0;
   width: 100%;
 `;
+const FirstName = styled.div`
+  margin: 0 5px 35px 0;
+  width: 100%;
+`;
+const LastName = styled.div`
+  margin: 0 5px 35px 0;
+  width: 100%;
+`;
 const Password2Input = styled.input`
   height: 40px;
   width: 100%;
@@ -312,6 +346,30 @@ const PasswordInput = styled.input`
     color: grey;
   }
   width: 100%;
+`;
+const FirstNameInput = styled.input`
+  height: 40px;
+  width: 100%;
+  color: black;
+  border: 2px solid grey;
+  border-radius: 3px;
+  background-color: white;
+  /* animation: ${morph} 0.75s linear; */
+  ::placeholder {
+    color: grey;
+  }
+`;
+const LastNameInput = styled.input`
+  height: 40px;
+  width: 100%;
+  color: black;
+  border: 2px solid grey;
+  border-radius: 3px;
+  background-color: white;
+  /* animation: ${morph} 0.75s linear; */
+  ::placeholder {
+    color: grey;
+  }
 `;
 const EmailInput = styled.input`
   height: 40px;

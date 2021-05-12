@@ -34,7 +34,7 @@ const Page = () => {
         <Route path="/login">
           <Login />
         </Route>
-        <Route exact path="/stocks">
+        <Route exact path="/stocks/:alpha">
           <Stocks />
         </Route>
         <Route exact path="/stocks/:stockId/:stockName">

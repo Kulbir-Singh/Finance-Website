@@ -35,7 +35,7 @@ const Sidebar = () => {
           {/* <Link>
             <p>Categories</p>
           </Link> */}
-          <Link to="stocks">
+          <Link to="/stocks/A">
             <p>Popular Stocks</p>
           </Link>
           <Link to="/news">
@@ -67,7 +67,7 @@ const Sidebar = () => {
           <Link>
             <p>Day Trading</p>
           </Link>
-          <Link to="/stocks">
+          <Link to="/stocks/A">
             {" "}
             <p>Stocks</p>
           </Link>
