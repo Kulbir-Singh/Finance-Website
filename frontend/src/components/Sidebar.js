@@ -13,7 +13,9 @@ const Sidebar = () => {
         {user.USERINFO && (
           <UserInfo>
             <UserImg src={user.USERINFO.photo} />
-            <h3>{user.USERINFO.username}</h3>
+            <h3>
+              {user.USERINFO.firstName}&nbsp;{user.USERINFO.lastName}{" "}
+            </h3>
           </UserInfo>
         )}
         {!user.USERINFO && (
@@ -120,6 +122,7 @@ const Wrapper = styled.div`
   border-right: 2px solid #e9eaf0;
   h3:nth-child(n) {
     margin: 5px 0;
+    font-size: 2vh;
   }
 `;
 export default Sidebar;

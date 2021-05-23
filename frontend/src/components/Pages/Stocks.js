@@ -25,13 +25,18 @@ export default function Stocks() {
     return () => ac.abort();
   }, []);
   if (stocks) {
+    console.log(stocks);
   }
   return (
     <Wrapper>
       <StockHeader> Stocks</StockHeader>
       <Alpha>
         {alphabet.map((alpha) => {
-          return <Link to={`/stocks/${alpha}`}>{alpha}</Link>;
+          if (alpha === letter.alpha) {
+            return <AlphabetLink to={`/stocks/${alpha}`}>{alpha}</AlphabetLink>;
+          } else {
+            return <Link to={`/stocks/${alpha}`}>{alpha}</Link>;
+          }
         })}
       </Alpha>
       <StockInfo>
@@ -50,6 +55,14 @@ export default function Stocks() {
     </Wrapper>
   );
 }
+
+const AlphabetLink = styled(Link)`
+  border: 2px solid black;
+  text-align: center;
+  font-weight: bold;
+  width: 20px;
+  color: blue;
+`;
 
 const Alpha = styled.div`
   width: 100%;

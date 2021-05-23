@@ -53,6 +53,7 @@ export default createGlobalStyle`
   }
   a{
     text-decoration:none;
+    color:black;
     outline:none;
     padding:none;
     margin:none;

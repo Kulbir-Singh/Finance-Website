@@ -3,8 +3,6 @@ import styled, { keyframes } from "styled-components";
 import { Link } from "react-router-dom";
 // import Connection from "../";
 import ChartInfo from "./Chart";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 import Profile from "./Profile";
 import InvestImg from "../../Resources/investing.svg";
 import PortfolioImg from "../../Resources/portfolioimg.svg";
