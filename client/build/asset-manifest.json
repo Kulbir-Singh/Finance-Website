@@ -1,0 +1,32 @@
+{
+  "files": {
+    "main.js": "/static/js/main.b97d3447.chunk.js",
+    "main.js.map": "/static/js/main.b97d3447.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.204d4387.js",
+    "runtime-main.js.map": "/static/js/runtime-main.204d4387.js.map",
+    "static/js/2.dbb7813f.chunk.js": "/static/js/2.dbb7813f.chunk.js",
+    "static/js/2.dbb7813f.chunk.js.map": "/static/js/2.dbb7813f.chunk.js.map",
+    "static/js/3.da437c93.chunk.js": "/static/js/3.da437c93.chunk.js",
+    "static/js/3.da437c93.chunk.js.map": "/static/js/3.da437c93.chunk.js.map",
+    "index.html": "/index.html",
+    "static/js/2.dbb7813f.chunk.js.LICENSE.txt": "/static/js/2.dbb7813f.chunk.js.LICENSE.txt",
+    "static/media/bellicon.98f3c404.png": "/static/media/bellicon.98f3c404.png",
+    "static/media/bellicon1.7fb90dee.png": "/static/media/bellicon1.7fb90dee.png",
+    "static/media/connect.1b538c49.jpg": "/static/media/connect.1b538c49.jpg",
+    "static/media/financialimg.ef5be77d.svg": "/static/media/financialimg.ef5be77d.svg",
+    "static/media/investing.750022e5.svg": "/static/media/investing.750022e5.svg",
+    "static/media/notification.4e571bc1.png": "/static/media/notification.4e571bc1.png",
+    "static/media/notification1.5005ec47.png": "/static/media/notification1.5005ec47.png",
+    "static/media/portfolioimg.eb0f14f4.svg": "/static/media/portfolioimg.eb0f14f4.svg",
+    "static/media/powerswitch.950a99bc.png": "/static/media/powerswitch.950a99bc.png",
+    "static/media/searchicon.27abff5e.png": "/static/media/searchicon.27abff5e.png",
+    "static/media/stocksimg.1a7297ab.svg": "/static/media/stocksimg.1a7297ab.svg",
+    "static/media/user.2ef9a6fe.svg": "/static/media/user.2ef9a6fe.svg",
+    "static/media/vaultLogo.33be6c51.png": "/static/media/vaultLogo.33be6c51.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.204d4387.js",
+    "static/js/2.dbb7813f.chunk.js",
+    "static/js/main.b97d3447.chunk.js"
+  ]
+}
